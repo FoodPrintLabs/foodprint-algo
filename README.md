@@ -1,7 +1,7 @@
 # foodprint-algo
 
 FoodPrint is a digital, blockchain-enabled, farm-to-fork (fresh produce) supply chain platform for smallholder farmers. 
-This is a repo for the FoodPrint Stateful Algorand Smart Contract created in Python using PyTeal.
+This is a repo for the FoodPrint Algorand integration.
 
 
 ## Overview
@@ -10,23 +10,16 @@ TODO
 ## Documentation
 TODO
 
-## Installation (Development Environment - Python)
+## Installation
 
 1. Install `PyTeal` and other `Python` dependencies. 
 ```
 $pip install -r requirements.txt
 ```
 
-## Installation (Development Environment - Node.js)
-
-1. Install `Node.js` dependencies. 
+2. Install `Node.js` dependencies e.g. `algosdk` and `dotenv`. 
 ```
-$npm install
-```
-
-2. Install dotenv node package. Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env 
-```
-$npm install dotenv
+$npm install1
 ```
 
 3. Create a `.env` file in the root of the project. This should be .gitignored
@@ -50,14 +43,14 @@ ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
 ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC
 ```
 
-5. Test import of .env variables using `tests/test_env.js` from project root
+5. Run script (from project root) to test import of .env variables
 ```
 node  -r dotenv/config tests/test_env.js
 ```
 
-6. Run script to setup Algorand accounts
+6. Run script (from project root) to setup Algorand accounts from project root
 ```
-$node -r dotenv/config 1_algo_account_create.js  
+$node -r dotenv/config scripts/1_algo_account_create.js  
 ```
 
 7. Update mnemonic env variables with account 1 and account 2 mnemonics
@@ -66,13 +59,13 @@ ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
 ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC 
 ```
 
-8. Run scripts to import mnemonics, check balances and send transactions
+8. Run scripts (from project root) to import mnemonics, check balances and send transactions
 ``` 
-$node -r dotenv/config 2_algo_account_balance.js  
-$node -r dotenv/config 3_algo_account_send.js  
+$node -r dotenv/config scripts/2_algo_account_balance.js  
+$node -r dotenv/config scripts/3_algo_account_send.js  
 ```
 
-9. Run tests to capture supply chain data via an Algorand zero value transaction and note field
+9. Run tests (from project root) to capture supply chain data (via an Algorand zero value transaction and the note field)
 ``` 
 node  -r dotenv/config tests/test_algo_supply_chain.js
 ```
