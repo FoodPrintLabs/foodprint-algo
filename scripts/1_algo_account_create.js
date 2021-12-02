@@ -86,7 +86,7 @@ if (environment == 'TESTNET') {
 // Instantiate the algod wrapper
 let algodclient = new algosdk.Algodv2(token, server, port);
 
-//------/Setup aldod connection------\\
+//------/Setup algod connection------\\
 
 //------Check algod status------\\
 
