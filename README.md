@@ -55,19 +55,27 @@ node  -r dotenv/config tests/test_env.js
 node -r dotenv/config scripts/1_algo_account_create.js  
 ```
 
-7. Update mnemonic env variables with account 1 and account 2 mnemonics
+7. Update Algorand account env variables with details for account 1 and account 2 (i.e. addresses and mnemonics)
 ```
+ACCOUNT1_ADDRESS=REPLACEME_WITH_ACCOUNT1_ADDRESS
 ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
+ACCOUNT2_ADDRESS=REPLACEME_WITH_ACCOUNT2_ADDRESS
 ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC 
 ```
 
-8. Run scripts (from project root) to import mnemonics, check balances and send transactions
+8. Fund the newly created accounts. 
+- Add funds to DEV account using goal (i.e. ./sandbox goal clerk send -a 12345678)  using one of the default accounts 
+created from the unencrypted wallet (i.e. assuming you are running sandbox locally)
+- Add funds to TESTNET account using the TestNet Dispenser at https://bank.testnet.algorand.network
+- Add funds to MAINNET account using the Algorand Wallet or other source with real ALGO's
+
+9. Run scripts (from project root) to import mnemonics, check balances and send transactions
 ``` 
 node -r dotenv/config scripts/2_algo_account_balance.js  
 node -r dotenv/config scripts/3_algo_account_send.js  
 ```
 
-9. Run tests (from project root) to capture supply chain data (via an Algorand zero value transaction and the note field)
+10. Run tests (from project root) to capture supply chain data (via an Algorand zero value transaction and the note field)
 ``` 
 node  -r dotenv/config tests/test_algo_supply_chain.js
 ```
