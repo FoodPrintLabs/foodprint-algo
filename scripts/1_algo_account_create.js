@@ -58,27 +58,29 @@ console.log("Now setting up algod connection...");
 // e.g. https://developer.purestake.io/ (in the Ethereum space, this would be infura.io)
 // $curl -X GET "https://testnet-algorand.api.purestake.io/ps2/v2/status" -H "x-api-key: REPLACE_WITH_PURESTAKE_KEY"
 
-const environment = process.env.ENV // DEV, TESTNET or MAINNET
-console.log("ENV currently set to " + environment)
+const environment = process.env.ENV; // DEV, TESTNET or MAINNET
+console.log("ENV currently set to " + environment);
+
+let token, server, port;
 
 if (environment == 'TESTNET') {
-    const token = {
+    token = {
     'X-API-Key': process.env.TESTNET_ALGOD_API_KEY
-}
-    const server = process.env.TESTNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
-    const port = process.env.TESTNET_ALGOD_PORT;
+};
+    server = process.env.TESTNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
+    port = process.env.TESTNET_ALGOD_PORT;
 } else if (environment == 'MAINNET') {
     //if MAINNET
-    const token = {
+    token = {
         'X-API-Key': process.env.MAINNET_ALGOD_API_KEY
     }
-    const server = process.env.MAINNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
-    const port = process.env.MAINNET_ALGOD_PORT;
+    server = process.env.MAINNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
+    port = process.env.MAINNET_ALGOD_PORT;
 } else {
     //if DEV
-    const token = process.env.DEV_ALGOD_API_KEY; // "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    const server = process.env.DEV_ALGOD_SERVER; // "http://localhost";
-    const port = process.env.DEV_ALGOD_PORT;
+    token = process.env.DEV_ALGOD_API_KEY; // "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    server = process.env.DEV_ALGOD_SERVER; // "http://localhost";
+    port = process.env.DEV_ALGOD_PORT;
 }
 
 // Instantiate the algod wrapper
