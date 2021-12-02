@@ -1,6 +1,6 @@
 // Script 1 - create algorand accounts using the algosdk
 // Make sure you have updated env variables before running. See readme
-// Usage from project root - $node -r dotenv/config 1_algo_account_create.js
+// Usage from project root - $node -r dotenv/config scripts/1_algo_account_create.js
 
 const algosdk = require('algosdk');
 // Generate 2 accounts

@@ -1,6 +1,6 @@
 // Script 2 - check account balances using the algosdk
 // Make sure you have updated env variables before running. See readme
-// Usage from project root - $node -r dotenv/config 2_algo_account_balance.js
+// Usage from project root - $node -r dotenv/config scripts/2_algo_account_balance.js
 
 const algosdk = require('algosdk');
 

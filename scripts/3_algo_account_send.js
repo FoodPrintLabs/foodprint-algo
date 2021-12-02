@@ -1,5 +1,5 @@
 // Script 3 - send algos from one account to another using the algosdk
-// Usage - $node algo_account_send.js
+// Usage - $node -r dotenv/config scripts/algo_account_send.js
 
 const algosdk = require('algosdk');
 
