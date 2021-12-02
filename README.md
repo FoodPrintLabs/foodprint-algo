@@ -66,8 +66,11 @@ ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC
 8. Fund the newly created accounts. 
 - Add funds to DEV account using goal (i.e. ./sandbox goal clerk send -a 12345678)  using one of the default accounts 
 created from the unencrypted wallet (i.e. assuming you are running sandbox locally)
-- Add funds to TESTNET account using the TestNet Dispenser at https://bank.testnet.algorand.network
-- Add funds to MAINNET account using the Algorand Wallet or other source with real ALGO's
+- Add funds to TESTNET account using the TestNet Dispenser at https://bank.testnet.algorand.network. This dispenses 
+10000000 microalgos = 10 ALGOs
+- Add funds to MAINNET account using the Algorand Wallet or other source with real ALGOs
+- You can view accounts on TESTNET here - https://testnet.algoexplorer.io/address/ 
+and MAINNET here - https://algoexplorer.io/address/
 
 9. Run scripts (from project root) to import mnemonics, check balances and send transactions
 ``` 
