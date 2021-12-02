@@ -4,9 +4,9 @@
 
 const algosdk = require('algosdk');
 // Generate 2 accounts
-// once created successfully, you will need to add funds via goal (DEV), testnet dispenser (TESTNET) or Algorand Wallet (MAINNET)
+// once created successfully, you will need to add funds via goal (DEV i.e. local sandbox), testnet dispenser (TESTNET) or Algorand Wallet (MAINNET)
 // The Algorand TestNet Dispenser is located here: https://bank.testnet.algorand.network/
-// TestNet node 3rd party serivce use PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io"
+// TestNet node 3rd party service use PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io"
 
 //------Setup algorand accounts------\\
 
@@ -30,10 +30,10 @@ var account2_mnemonic = algosdk.secretKeyToMnemonic(acct.sk);
 console.log("Account Mnemonic 2 = " + account2_mnemonic);
 console.log("Account created. Note the address and mnemonic (store mnemonic somewhere safe!)");
 
-
 console.log("\nAdd funds to DEV account using goal (i.e. ./sandbox goal clerk send -a 12345678)  using one of the default accounts created from the unencrypted wallet");
 console.log("Add funds to TESTNET account using the TestNet Dispenser at https://bank.testnet.algorand.network/");
 console.log("Add funds to MAINNET account using the Algorand Wallet");
+
 console.log("\nCopy these 3 lines of code. They will be used in helper and integration scripts etc " +
     "(e.g. algo_account_balance.js and algo_account_send.js). Make sure to safely store these mnemonics offline or a scure keystore");
 
