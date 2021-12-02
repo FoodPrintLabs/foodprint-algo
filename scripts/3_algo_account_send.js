@@ -32,6 +32,53 @@ console.log("");
 
 //------/Recover algorand accounts from mnemonic/secret phrase------\\
 
+//------Helper to Wait for Confirmation of transaction------\\
+
+/**
+ * Wait until the transaction is confirmed or rejected, or until 'timeout'
+ * number of rounds have passed.
+ * @param {algosdk.Algodv2} algodClient the Algod V2 client
+ * @param {string} txId the transaction ID to wait for
+ * @param {number} timeout maximum number of rounds to wait
+ * @return {Promise<*>} pending transaction information
+ * @throws Throws an error if the transaction is not confirmed or rejected in the next timeout rounds
+ */
+const waitForConfirmation = async function (algodClient, txId, timeout) {
+    if (algodClient == null || txId == null || timeout < 0) {
+        throw new Error("Bad arguments");
+    }
+
+    const status = (await algodClient.status().do());
+    if (status === undefined) {
+        throw new Error("Unable to get node status");
+    }
+
+    const startround = status["last-round"] + 1;
+    let currentround = startround;
+
+    while (currentround < (startround + timeout)) {
+        const pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
+        if (pendingInfo !== undefined) {
+            if (pendingInfo["confirmed-round"] !== null && pendingInfo["confirmed-round"] > 0) {
+                //Got the completed Transaction
+                return pendingInfo;
+            } else {
+                if (pendingInfo["pool-error"] != null && pendingInfo["pool-error"].length > 0) {
+                    // If there was a pool error, then the transaction has been rejected!
+                    throw new Error("Transaction " + txId + " rejected - pool error: " + pendingInfo["pool-error"]);
+                }
+            }
+        }
+        await algodClient.statusAfterBlock(currentround).do();
+        currentround++;
+    }
+
+    throw new Error("Transaction " + txId + " not confirmed after " + timeout + " rounds!");
+};
+
+//------/Helper to Wait for Confirmation of transaction------\\
+
+
 //------Setup algod connection------\\
 
 console.log("Now setting up algod connection...");
@@ -76,7 +123,7 @@ if (environment == 'TESTNET') {
 // Instantiate the algod wrapper
 let algodclient = new algosdk.Algodv2(token, server, port);
 
-//------/Setup aldod connection------\\
+//------/Setup algod connection------\\
 
 //------Check algod status------\\
 
@@ -94,38 +141,57 @@ console.log("Now checking algod status...");
 
 //------Send algos from one account to another and check balance------\\
 
-console.log("Now sending algos from one account 1 to account 2... Assumes account 1 has funds!");
+console.log("Now sending algos from %s to %s... Assumes source account has funds!", recoveredAccount1.addr, recoveredAccount2.addr);
 //If you use the async keyword before a function definition, you can then use await within the function.
 // When you await a promise, the function is paused in a non-blocking way until the promise settles.
 (async() => {
     let params = await algodclient.getTransactionParams().do();
+    const enc = new TextEncoder();
+    const note = enc.encode("Hello World");
     let txn = {
         "from": recoveredAccount1.addr,
         "to": recoveredAccount2.addr,
-        "fee": 1,
+        // comment out the next line to use suggested fee
+        "fee": 1000, // transactions only cost 1/1000th of an Algo (0.001).
         "amount": 1000000, // 1 algos
         "firstRound": params.firstRound,
         "lastRound": params.lastRound,
         "genesisID": params.genesisID,
         "genesisHash": params.genesisHash,
-        "note": new Uint8Array(0)
+        "note": note
     }
+
+    // sign transaction using private key
     let signedTxn = algosdk.signTransaction(txn, recoveredAccount1.sk);
+
+    // submit the signed transaction to the network
     let sendTx = await algodclient.sendRawTransaction(signedTxn.blob).do();
 
     console.log("Transaction: " + sendTx.txId);
 
-    console.log("Now checking balances...");
-    // get information on accounts e.g. balances
-    let account_info = (await algodclient.accountInformation(recoveredAccount1.addr).do());
-    let acct_string = JSON.stringify(account_info);
-    console.log("Account 1 Info: " + acct_string);
-    console.log("Balance of account 1: " + JSON.stringify(account_info.amount));
+    // Wait for confirmation
+   let confirmedTxn = await waitForConfirmation(algodclient, sendTx.txId, 4);
 
-    account_info = (await algodclient.accountInformation(recoveredAccount2.addr).do());
-    acct_string = JSON.stringify(account_info);
-    console.log("Account 2 Info: " + acct_string);
-    console.log("Balance of account 2: " + JSON.stringify(account_info.amount));
+   // get the completed transaction
+   console.log("Transaction " + sendTx.txId + " confirmed in round " + confirmedTxn["confirmed-round"]);
+
+   var txnNote = new TextDecoder().decode(confirmedTxn.txn.txn.note);
+   console.log("Note field: ", txnNote);
+
+   console.log("Transaction Amount: %d microAlgos", confirmedTxn.txn.txn.amt);
+   console.log("Transaction Fee: %d microAlgos", confirmedTxn.txn.txn.fee);
+
+   console.log("Now checking balances...");
+   // get information on accounts e.g. balances
+   let account_info = (await algodclient.accountInformation(recoveredAccount1.addr).do());
+   let acct_string = JSON.stringify(account_info);
+   console.log("Account 1 Info: " + acct_string);
+   console.log("Balance of account 1 in microAlgos: " + JSON.stringify(account_info.amount));
+
+   account_info = (await algodclient.accountInformation(recoveredAccount2.addr).do());
+   acct_string = JSON.stringify(account_info);
+   console.log("Account 2 Info: " + acct_string);
+   console.log("Balance of account 2: " + JSON.stringify(account_info.amount));
 
 })().catch( e => {
     console.log(e)
