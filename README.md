@@ -50,19 +50,32 @@ ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
 ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC
 ```
 
-5. Test import of .env variables using `tests/env.js` from project root
+5. Test import of .env variables using `tests/test_env.js` from project root
 ```
-node  -r dotenv/config tests/env.js
+node  -r dotenv/config tests/test_env.js
 ```
 
 6. Run script to setup Algorand accounts
 ```
-// Usage from project root
 $node -r dotenv/config 1_algo_account_create.js  
-
 ```
 
+7. Update mnemonic env variables with account 1 and account 2 mnemonics
+```
+ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
+ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC 
+```
 
+8. Run scripts to import mnemonics, check balances and send transactions
+``` 
+$node -r dotenv/config 2_algo_account_balance.js  
+$node -r dotenv/config 3_algo_account_send.js  
+```
+
+9. Run tests to capture supply chain data via an Algorand zero value transaction and note field
+``` 
+node  -r dotenv/config tests/test_algo_supply_chain.js
+```
 
 ## References
 - https://developer.algorand.org/articles/creating-stateful-algorand-smart-contracts-python-pyteal/
