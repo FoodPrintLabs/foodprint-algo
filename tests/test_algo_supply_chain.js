@@ -95,7 +95,9 @@ console.log("Now setting up algod connection...");
 // $curl -X GET "https://testnet-algorand.api.purestake.io/ps2/v2/status" -H "x-api-key: REPLACE_WITH_PURESTAKE_KEY"
 
 const environment = process.env.ENV // DEV, TESTNET or MAINNET
-console.log("ENV currently set to " + environment)
+console.log("ENV currently set to " + environment);
+
+let token, server, port;
 
 if (environment == 'TESTNET') {
     const token = {
