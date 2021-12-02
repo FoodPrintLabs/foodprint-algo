@@ -14,17 +14,17 @@ TODO
 
 1. Install `PyTeal` and other `Python` dependencies. 
 ```
-$pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 2. Install `Node.js` dependencies e.g. `algosdk` and `dotenv`. 
 ```
-$npm install1
+npm install1
 ```
 
 3. Create a `.env` file in the root of the project. This should be .gitignored
 ```
-$touch .env
+touch .env
 ```
 
 4. Add environment variables to `.env`. 
@@ -39,8 +39,10 @@ TESTNET_ALGOD_PORT=
 MAINNET_ALGOD_API_KEY=REPLACEME_WITH_PURESTAKE_KEY
 MAINNET_ALGOD_SERVER=https:https://mainnet-algorand.api.purestake.io/ps2
 MAINNET_ALGOD_PORT=
+ACCOUNT1_ADDRESS=REPLACEME_WITH_ACCOUNT1_ADDRESS
 ACCOUNT1_MNEMONIC=REPLACEME_WITH_ACCOUNT1_MNEMONIC
-ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC
+ACCOUNT2_ADDRESS=REPLACEME_WITH_ACCOUNT2_ADDRESS
+ACCOUNT2_MNEMONIC=REPLACEME_WITH_ACCOUNT2_MNEMONIC
 ```
 
 5. Run script (from project root) to test import of .env variables
@@ -50,7 +52,7 @@ node  -r dotenv/config tests/test_env.js
 
 6. Run script (from project root) to setup Algorand accounts from project root
 ```
-$node -r dotenv/config scripts/1_algo_account_create.js  
+node -r dotenv/config scripts/1_algo_account_create.js  
 ```
 
 7. Update mnemonic env variables with account 1 and account 2 mnemonics
@@ -61,8 +63,8 @@ ACCOUNT2_MNEMONIC==REPLACEME_WITH_ACCOUNT2_MNEMONIC
 
 8. Run scripts (from project root) to import mnemonics, check balances and send transactions
 ``` 
-$node -r dotenv/config scripts/2_algo_account_balance.js  
-$node -r dotenv/config scripts/3_algo_account_send.js  
+node -r dotenv/config scripts/2_algo_account_balance.js  
+node -r dotenv/config scripts/3_algo_account_send.js  
 ```
 
 9. Run tests (from project root) to capture supply chain data (via an Algorand zero value transaction and the note field)
