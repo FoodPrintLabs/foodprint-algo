@@ -95,10 +95,9 @@ console.log("Now checking if indexer is available and looking up block 5...");
 console.log("Now searching transaction notes...");
 (async () => {
     let search_term = '{"firstName":"John"';
-    //let search_term = '"John"';
     const enc = new TextEncoder();
     const note = enc.encode(search_term);
-    const s = Buffer.from(note).toString("base64");
+    const s = Buffer.from(note).toString("base64"); // const s = algosdk.encodeObj(search_term)
     let transactionInfo = await indexerClient.searchForTransactions()
         .address(recoveredAccount1.addr) // only include transactions with this address in one of the transaction fields
         .notePrefix(s) // Specifies a prefix which must be contained in the note field
