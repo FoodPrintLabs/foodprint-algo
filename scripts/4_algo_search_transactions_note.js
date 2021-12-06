@@ -91,20 +91,23 @@ console.log("Now checking if indexer is available and looking up block 5...");
 //------/Indexer get block (i.e. check status)------\\
 
 //------Search transaction notes------\\
-
+// https://developer.algorand.org/docs/get-details/indexer/#note-field-searching
+console.log("Now searching transaction notes...");
 (async () => {
-    //let search_term = '{"firstName":"John"';
-    let search_term = 'Hello World';
+    let search_term = '{"firstName":"John"';
+    //let search_term = '"John"';
     const enc = new TextEncoder();
     const note = enc.encode(search_term);
     const s = Buffer.from(note).toString("base64");
     let transactionInfo = await indexerClient.searchForTransactions()
-        .minRound(10894697)
-        .notePrefix(s).do();
+        .address(recoveredAccount1.addr) // only include transactions with this address in one of the transaction fields
+        .notePrefix(s) // Specifies a prefix which must be contained in the note field
+        .minRound(10894697).do();
     console.log("Information for Transaction search: " + JSON.stringify(transactionInfo, undefined, 2));
     // create a buffer
     if (transactionInfo.transactions.length > 0)
     {
+        console.log("Number of transactions found: " + transactionInfo.transactions.length);
         console.log("First Match:");
         const buff = Buffer.from(transactionInfo.transactions[0].note, 'base64');
         // decode buffer as UTF-8
@@ -112,8 +115,8 @@ console.log("Now checking if indexer is available and looking up block 5...");
         // print normal string
         console.log(str);
     }
-
 })().catch(e => {
+    // Error: Gateway Timeout seems common
     console.log(e);
     console.trace();
 });
