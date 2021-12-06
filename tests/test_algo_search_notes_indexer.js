@@ -2,6 +2,8 @@
 // requires algosdk@1.6.1 or higher
 // verify installed version
 // npm list algosdk
+// Usage from project root - $node  -r dotenv/config tests/test_algo_search_notes_indexer.js
+
 const algosdk = require('algosdk');
 const indexer_token = "";
 const indexer_server = "http://localhost";

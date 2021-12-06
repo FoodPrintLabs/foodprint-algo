@@ -1,4 +1,6 @@
 // source https://replit.com/@Algorand/ASAIndexerJS#index.js
+// Usage from project root - $node  -r dotenv/config scripts/5_algo_search_transaction.js
+
 const algosdk = require('algosdk');
 
 const indexer_server = "https://testnet.algoexplorerapi.io/idx2/";
