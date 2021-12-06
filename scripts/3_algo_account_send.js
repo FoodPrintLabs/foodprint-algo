@@ -1,5 +1,5 @@
 // Script 3 - send algos from one account to another using the algosdk
-// Usage - $node -r dotenv/config scripts/algo_account_send.js
+// Usage - $node -r dotenv/config scripts/3_algo_account_send.js
 
 const algosdk = require('algosdk');
 
@@ -146,8 +146,9 @@ console.log("Now sending algos from %s to %s... Assumes source account has funds
 // When you await a promise, the function is paused in a non-blocking way until the promise settles.
 (async() => {
     let params = await algodclient.getTransactionParams().do();
+    let notes_data = '{"firstName":"John", "lastName":"Doe"}';
     const enc = new TextEncoder();
-    const note = enc.encode("Hello World");
+    const note = enc.encode(notes_data);
     let txn = {
         "from": recoveredAccount1.addr,
         "to": recoveredAccount2.addr,
