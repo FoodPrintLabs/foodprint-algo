@@ -99,7 +99,7 @@ console.log("Now searching transaction notes...");
     const note = enc.encode(search_term);
     const s = Buffer.from(note).toString("base64"); // const s = algosdk.encodeObj(search_term)
     let transactionInfo = await indexerClient.searchForTransactions()
-        .address(recoveredAccount1.addr) // only include transactions with this address in one of the transaction fields
+        .address(recoveredAccount2.addr) // only include transactions with this address in one of the transaction fields
         .notePrefix(s) // Specifies a prefix which must be contained in the note field
         .minRound(10894697).do();
     console.log("Information for Transaction search: " + JSON.stringify(transactionInfo, undefined, 2));
