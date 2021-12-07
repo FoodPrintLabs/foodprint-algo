@@ -100,25 +100,24 @@ console.log("ENV currently set to " + environment);
 let token, server, port;
 
 if (environment == 'TESTNET') {
-    const token = {
+    token = {
     'X-API-Key': process.env.TESTNET_ALGOD_API_KEY
 }
-    const server = process.env.TESTNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
-    const port = process.env.TESTNET_ALGOD_PORT;
+    server = process.env.TESTNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
+    port = process.env.TESTNET_ALGOD_PORT;
 } else if (environment == 'MAINNET') {
     //if MAINNET
-    const token = {
+    token = {
         'X-API-Key': process.env.MAINNET_ALGOD_API_KEY
     }
-    const server = process.env.MAINNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
-    const port = process.env.MAINNET_ALGOD_PORT;
+    server = process.env.MAINNET_ALGOD_SERVER; // PureStake "https://testnet-algorand.api.purestake.io/ps2" or AlgoExplorer "https://api.testnet.algoexplorer.io",
+    port = process.env.MAINNET_ALGOD_PORT;
 } else {
     //if DEV
-    const token = process.env.DEV_ALGOD_API_KEY; // "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    const server = process.env.DEV_ALGOD_SERVER; // "http://localhost";
-    const port = process.env.DEV_ALGOD_PORT;
+    token = process.env.DEV_ALGOD_API_KEY; // "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    server = process.env.DEV_ALGOD_SERVER; // "http://localhost";
+    port = process.env.DEV_ALGOD_PORT;
 }
-
 
 // Instantiate the algod wrapper
 let algodclient = new algosdk.Algodv2(token, server, port);
@@ -146,8 +145,14 @@ console.log("Now sending algos from %s to %s... Assumes source account has funds
 // When you await a promise, the function is paused in a non-blocking way until the promise settles.
 (async() => {
     let params = await algodclient.getTransactionParams().do();
+    let supplyChainData = '{"logID":"9c6491af-74d8-43b1-acdd-83737cd6ec83", "logtype":"harvest", _supplierproduceID":"BGSM_Bergamot",' +
+        '"_photoHash":"a066295322a9e6f2137d276b911d45362b206ce3749624908aaf06ede392d6e2",' +
+        '"_geolocationFoodPrint":"Test", "actionTimeStamp":"Thu Nov 04 2021 13:54:00 GMT+0200 (South Africa Standard Time)",'+
+        '"_growingCondtions":"Pesticide Free, Greenhouse Grown", "logDescription":"FoodPrint Test", logTableName":"foodprint_harvest", \n' +
+        '        "logQuantity":"50(kilogram)", "logUser":"superuserjulz@example.com"}';
+
     const enc = new TextEncoder();
-    const note = enc.encode("Hello World");
+    const note = enc.encode(supplyChainData);
     let txn = {
         "from": recoveredAccount1.addr,
         "to": recoveredAccount2.addr,
