@@ -146,7 +146,7 @@ console.log("Now logging supply chain harvest data from %s to %s... Assumes sour
 (async() => {
     let params = await algodclient.getTransactionParams().do();
     // see https://mumbai.polygonscan.com/tx/0xffbd57ca02f12666561b7789a09e29868f564b4344b8b319e74e0181658af40e vs
-    // https://testnet.algoexplorer.io/tx/X2V5FXDKXOEOSI3JD7XJVZFSETFMG5KPK3KANIXAFRQJ2D3QDCZA
+    // https://goalseeker.purestake.io/algorand/testnet/transaction/X2V5FXDKXOEOSI3JD7XJVZFSETFMG5KPK3KANIXAFRQJ2D3QDCZA
     let supplyChainData = '{"logID":"9c6491af-74d8-43b1-acdd-83737cd6ec83", "logtype":"harvest", _supplierproduceID":"BGSM_Bergamot",' +
         '"_photoHash":"a066295322a9e6f2137d276b911d45362b206ce3749624908aaf06ede392d6e2",' +
         '"_geolocationFoodPrint":"Test", "actionTimeStamp":"Thu Nov 04 2021 13:54:00 GMT+0200 (South Africa Standard Time)",'+
@@ -213,7 +213,7 @@ console.log("Now logging supply chain handover data from %s to %s... Assumes sou
 (async() => {
     let params = await algodclient.getTransactionParams().do();
     // see https://mumbai.polygonscan.com/tx/0x009c453c0fdb2509245377877c9adde687068effd9bf28859e000f87ac3b4751 vs
-    // https://testnet.algoexplorer.io/tx/4ESVS3Z5CGCARFXB64CWZKBVWK3VBHNQNIMZLMC5VGT653MFS7JA
+    // https://goalseeker.purestake.io/algorand/testnet/transaction/4ESVS3Z5CGCARFXB64CWZKBVWK3VBHNQNIMZLMC5VGT653MFS7JA
     let supplyChainData = '{"logID":"25ed364a-5a22-4796-9e42-c2496164e917", "previouslogID":"9c6491af-74d8-43b1-acdd-83737cd6ec83", ' +
         '"logtype":"storage", "_otherID":"{supplierproduceID:BGSM_Bergamot, marketID:OZCFM}"' +
         '"actionTimeStamp":"Thu Nov 04 2021 14:24:00 GMT+0200 (South Africa Standard Time)",'+
